@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente OPC UA</title>
+    <link rel=StyleSheet href="style.css" type="text/css" media=screen>
+</head>
+<body>
+    <div class="container">
+        <h1>Cliente OPC UA - Tiempo Real</h1>
+        <div id="clock">---</div>
+        <div id="value">---</div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Escuchar actualizaciones del reloj
+        socket.on("clock-update", (data) => {
+            document.getElementById("clock").textContent = `Reloj: ${data.timestamp}`;
+        });
+
+        // Escuchar actualizaciones del nodo OPC UA
+        socket.on("opcua-update", (data) => {
+            document.getElementById("value").textContent = `Valor OPC UA: ${data.value}`;
+        });
+    </script>
+</body>
+</html>
